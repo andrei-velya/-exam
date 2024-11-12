@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Обзор книги</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #ffffff;">
+
+  <!-- Навигация -->
+  <nav class="navbar navbar-light bg-light neon-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'main' %}">Назад к обзорам</a>
+    </div>
+  </nav>
+
+  <!-- Основной контент -->
+  <div class="container mt-5">
+    <div class="card neon-card p-4">
+      <h2 class="neon-text">{{book.title}}</h2>
+      <p><strong>Автор:</strong> {{book.author}}</p>
+      <p><strong>Категория:</strong> {{book.category}}</p>
+      <p><strong>Статус обзора:</strong> {{book.get_status_display}}</p>
+      <p><strong>Оценка:</strong> {{book.rate}}/10</p>
+      {% if is_superuser %}
+        {% if book.status == 'Draft' %}
+        <p><a href="{% url 'book_publish' book.id %}">Опубликовать</a></p>
+        {% elif book.status == 'Published' %}
+        <p><a href="{% url 'book_unpublish' book.id %}">Снять с публикации</a></p>
+        {% endif %}
+        
+      {% endif %}
+      <p><strong>Обзор:</strong> {{book.description}}</p>     
+      <p><strong>Обзор:</strong> {{book.review}}</p>
+    </div>
+  </div>
+
+  <!-- Подвал -->
+  <footer class="bg-light text-center py-3 mt-5 neon-footer">
+    <div class="container">
+      <p class="mb-1">© 2024 velyaminskiy. Все права защищены.</p>
+      <div class="d-flex justify-content-center">
+        <a href="#" class="mx-2 neon-text">Facebook</a>
+        <a href="#" class="mx-2 neon-text">Twitter</a>
+        <a href="#" class="mx-2 neon-text">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
